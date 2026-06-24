@@ -27,7 +27,7 @@
 //!
 //! - Up to 3 retries after the initial attempt.
 //! - Exponential backoff with full jitter, 100ms base to 30s cap.
-//! - Retries on 5xx, 429, connect, and timeout errors. A `Retry-After` header
+//! - Retries on 5xx, 429, 408, connect, and timeout errors. A `Retry-After` header
 //!   on any retried response (e.g. 429 or 503) is honored in place of the
 //!   computed backoff, capped so a hostile value cannot pin the client.
 //! - Only idempotent methods (GET, HEAD, PUT, DELETE, OPTIONS, TRACE) are

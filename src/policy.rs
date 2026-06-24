@@ -171,7 +171,9 @@ impl DefaultRetryPolicyBuilder {
                         RetryableOutcome::Error(err) => err.is_timeout() || err.is_connect(),
                         RetryableOutcome::Response(resp) => {
                             let status = resp.status();
-                            status.is_server_error() || status == StatusCode::TOO_MANY_REQUESTS
+                            status.is_server_error()
+                                || status == StatusCode::TOO_MANY_REQUESTS
+                                || status == StatusCode::REQUEST_TIMEOUT
                         }
                     },
                 )

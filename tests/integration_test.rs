@@ -433,6 +433,39 @@ async fn retries_on_429_too_many_requests() {
 }
 
 #[tokio::test]
+async fn retries_on_408_request_timeout() {
+    let server = MockServer::start().await;
+    let counter = Arc::new(AtomicUsize::new(0));
+    let counter_clone = counter.clone();
+    Mock::given(method("GET"))
+        .respond_with(move |_: &wiremock::Request| {
+            let n = counter_clone.fetch_add(1, Ordering::SeqCst);
+            if n == 0 {
+                ResponseTemplate::new(408)
+            } else {
+                ResponseTemplate::new(200)
+            }
+        })
+        .expect(2)
+        .mount(&server)
+        .await;
+
+    let client = Client::builder()
+        .with_client(reqwest::Client::new())
+        .with_retry_policy(
+            DefaultRetryPolicy::builder()
+                .max_retries(3)
+                .backoff(Duration::from_millis(1), Duration::from_millis(10))
+                .build(),
+        )
+        .build();
+    let req = Request::new(Method::GET, test_url(&server));
+    let resp = client.execute(req).await.unwrap();
+    assert_eq!(resp.status(), StatusCode::OK);
+    assert_eq!(counter.load(Ordering::SeqCst), 2);
+}
+
+#[tokio::test]
 async fn honors_retry_after_delay_seconds() {
     let server = MockServer::start().await;
     let counter = Arc::new(AtomicUsize::new(0));

@@ -12,7 +12,7 @@ defaults over blindly mirroring `go-retryablehttp`.
 
 - **Configurable retry count** via `max_retries`.
 - **Exponential backoff with full jitter** by default; override with `.backoff(min, max)`.
-- **Retry conditions**: 5xx responses, 429 Too Many Requests, connect/timeout errors.
+- **Retry conditions**: 5xx responses, 429 Too Many Requests, 408 Request Timeout, connect/timeout errors.
 - **Retry-After support**: when a retried response (e.g. `429 Too Many Requests`
   or `503 Service Unavailable`) carries a `Retry-After` header (delay-seconds or
   HTTP-date), it is honored instead of the configured backoff. The value is capped
@@ -184,7 +184,7 @@ Defaults:
 
 - Max retries: **3**
 - Backoff: **exponential, 100ms base to 30s cap, full jitter**
-- Retry on: 5xx, 429, connect/timeout errors
+- Retry on: 5xx, 429, 408, connect/timeout errors
 - Retryable methods: GET, HEAD, PUT, DELETE, OPTIONS, TRACE
 
 ### `Error`

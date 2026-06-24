@@ -1,6 +1,6 @@
 [package]
 name = "rs-retryablehttp"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["xmonader <xmonader@gmail.com>"]
 description = "A retrying HTTP client for Rust built on reqwest, with backoff, jitter and Retry-After support"
