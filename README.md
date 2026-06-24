@@ -1,5 +1,9 @@
 # rs-retryablehttp
 
+[![CI](https://github.com/xmonader/rs-retryablehttp/actions/workflows/ci.yml/badge.svg)](https://github.com/xmonader/rs-retryablehttp/actions/workflows/ci.yml)
+[![crates.io](https://img.shields.io/crates/v/rs-retryablehttp.svg)](https://crates.io/crates/rs-retryablehttp)
+[![docs.rs](https://docs.rs/rs-retryablehttp/badge.svg)](https://docs.rs/rs-retryablehttp)
+
 A retrying HTTP client library for Rust, built on `reqwest`.
 
 > Retries that respect idempotency and server backpressure by default.
