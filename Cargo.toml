@@ -1,0 +1,30 @@
+[package]
+name = "rs-retryablehttp"
+version = "0.1.0"
+edition = "2021"
+authors = ["xmonader <xmonader@gmail.com>"]
+description = "A retrying HTTP client for Rust built on reqwest, with backoff, jitter and Retry-After support"
+license = "MIT"
+repository = "https://github.com/xmonader/rs-retryablehttp"
+readme = "README.md"
+keywords = ["http", "retry", "reqwest", "backoff"]
+categories = ["web-programming::http-client"]
+
+[dependencies]
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
+thiserror = "1"
+tokio = { version = "1", features = ["time"] }
+rand = "0.8"
+tracing = "0.1"
+httpdate = "1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "time"] }
+wiremock = "0.6"
+futures-util = "0.3"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "stream"] }
+
+[features]
+default = ["rustls-tls"]
+rustls-tls = ["reqwest/rustls-tls"]
+native-tls = ["reqwest/native-tls"]
