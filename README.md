@@ -2,11 +2,15 @@
 
 A retrying HTTP client library for Rust, built on `reqwest`.
 
+> Retries that respect idempotency and server backpressure by default.
+
 ## Overview
 
 `rs-retryablehttp` wraps `reqwest` and adds configurable retry logic with
-exponential backoff, jitter, and `Retry-After` support. It prioritizes safe
-defaults over blindly mirroring `go-retryablehttp`.
+exponential backoff, jitter, and `Retry-After` support. Its defaults are chosen
+to be safe out of the box: only idempotent methods are retried unless you opt
+in, and a server's `Retry-After` is honored (and capped) so you cooperate with
+rate limits instead of fighting them.
 
 ## Features
 
